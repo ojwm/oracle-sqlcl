@@ -79,3 +79,64 @@ Alternatively, use the [shell script](#shell-script).
 
    SQL> 
    ```
+
+## Connections
+
+### Oracle Cloud Infrastructure (OCI)
+
+Create an account and an Autonomous Transaction Processing (ATP) database at <https://cloud.oracle.com>.
+
+1. Select the database instance from the [Autonomous Database](https://cloud.oracle.com/db/adb) dashboard.
+1. Click **DB Connection** and download the **Instance Wallet** to `~/.sqlcl`.\
+   E.g. `~/.sqlcl/Wallet_demo.zip`.
+1. Open SQLcl:
+
+   ```sh
+   sql /nolog
+   ```
+
+1. Load wallet:
+
+   ```text
+   SQL> SET CLOUDCONFIG Wallet_demo.zip
+
+   Operation is successfully completed.
+   Using temp directory:/var/folders/2v/jfse9ffs3sdfdfhde431dgge0000fr/T/oracle_cloud_config8573768666928582556
+   ```
+
+1. Check TNS entries:
+
+   ```text
+   SQL> SHOW TNS
+
+   TNS_ADMIN set to: /var/folders/2v/jfse9ffs3sdfdfhde431dgge0000fr/T/oracle_cloud_config8573768666928582556
+   
+   
+   Available TNS Entries
+   ---------------------
+   demo_high
+   demo_low
+   demo_medium
+   demo_tp
+   demo_tpurgent
+   ```
+
+1. Connect to database using a TNS entry:
+
+   ```text
+   SQL> CONNECT admin@demo_medium
+
+   Password? (**********?) *********************
+   Connected.
+   ```
+
+1. Execute some SQL:
+
+   ```text
+   SQL> SELECT SYSDATE
+     2  FROM dual;
+
+        SYSDATE
+   ____________ 
+   01-JUL-22
+   ```
