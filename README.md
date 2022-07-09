@@ -82,6 +82,44 @@ Alternatively, use the [shell script](#shell-script).
 
 ## Connections
 
+### Container
+
+Oracle expect users to build [images from source](https://github.com/oracle/docker-images), which is quite a chore. However there are community maintained [Oracle XE images](https://github.com/gvenzl/oci-oracle-xe) available.
+
+1. Run a container.
+
+   ```sh
+   podman run -d -p 1521:1521 -e ORACLE_PASSWORD=<your_password> gvenzl/oracle-xe:slim
+   ```
+
+1. Check container is running.
+
+   ```sh
+   $ podman ps -a                                                             
+   CONTAINER ID  IMAGE                            COMMAND     CREATED        STATUS            PORTS                   NAMES
+   6c5800535262  docker.io/gvenzl/oracle-xe:slim              8 seconds ago  Up 8 seconds ago  0.0.0.0:1521->1521/tcp  pensive_khorana
+   ```
+
+1. Connect to database as `system` user.
+
+   ```sh
+   $ sql system@localhost:1521/XEPDB1
+
+
+   SQLcl: Release 22.2 Production on Sat Jul 09 12:34:00 2022
+
+   Copyright (c) 1982, 2022, Oracle.  All rights reserved.
+
+   Password? (**********?) *****
+   Last Successful login time: Sat Jul 09 2022 12:34:05 +01:00
+
+   Connected to:
+   Oracle Database 21c Express Edition Release 21.0.0.0.0 - Production
+   Version 21.3.0.0.0
+   
+   SQL>
+   ```
+
 ### Oracle Cloud Infrastructure (OCI)
 
 Create an account and an Autonomous Transaction Processing (ATP) database at <https://cloud.oracle.com>.
