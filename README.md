@@ -61,6 +61,12 @@ Alternatively, use the [shell script](#shell-script).
    Installation complete
    ```
 
+1. Restart the shell. E.g. `zsh`:
+
+   ```sh
+   exec zsh
+   ```
+
 1. Check the SQLcl install.
 
    ```sh
@@ -70,14 +76,8 @@ Alternatively, use the [shell script](#shell-script).
    $ echo $SQLPATH
    /Users/<user>/.sqlcl
 
-   $ sql /nolog
-
-
-   SQLcl: Release 22.2 Production on Fri Jul 08 23:09:28 2022
-
-   Copyright (c) 1982, 2022, Oracle.  All rights reserved.
-
-   SQL> 
+   $ echo $TNS_ADMIN
+   /Users/<user>/.sqlcl
    ```
 
 ## Connections
@@ -118,6 +118,29 @@ Oracle expect users to build [images from source](https://github.com/oracle/dock
    Version 21.3.0.0.0
    
    SQL>
+   ```
+
+1. Optionally create a TNS entry in `$TNS_ADMIN/tnsnames.ora`.
+
+   ```sh
+   XEPDB1 =
+       (DESCRIPTION =
+           (ADDRESS = 
+               (PROTOCOL = TCP)
+               (HOST = localhost)
+               (PORT = 1521)
+           )
+           (CONNECT_DATA =
+               (SERVER = DEDICATED)
+               (SERVICE_NAME = XEPDB1)
+           )
+       )
+   ```
+
+   Then connect using the entry:
+
+   ```sh
+   sql system@XEPDB1
    ```
 
 ### Oracle Cloud Infrastructure (OCI)

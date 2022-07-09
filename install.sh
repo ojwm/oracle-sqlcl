@@ -41,6 +41,7 @@ user_shell="${SHELL##*/}"
 if [ $user_shell = fish ]
 then
     set -Ux SQLPATH $sql_path || exit_script 1
+    set -Ux TNS_ADMIN $sql_path || exit_script 1
 else
     
     # Determine the correct environment file
@@ -59,8 +60,8 @@ else
     # Add SQLPATH to environment file if not present
     grep -qF 'export SQLPATH=' $env_file || (echo 'export SQLPATH='$sql_path >> $env_file || exit_script 1)
 
-    # Source the environment file into the current shell
-    . $env_file || exit_script 1
+    # Add TNS_ADMIN to environment file if not present
+    grep -qF 'export TNS_ADMIN=' $env_file || (echo 'export TNS_ADMIN='$sql_path >> $env_file || exit_script 1)
 fi
 
 # Clean up
